@@ -1,3 +1,4 @@
+const { people } = require("../data");
 const {
     getPeople,
     getPerson,
@@ -88,11 +89,14 @@ const deletePersonController = (req, res) => {
     return res.status(200).json(response);
 };
 const queryPeopleController = (req, res) => {
-    const { keyword, limit } = req.query;
+    let { keyword, limit } = req.query;
     let newPeople = [];
     if (!keyword) {
         newPeople = getPeople();
     } else {
+        if (!limit) {
+            limit = people.length;
+        }
         newPeople = searchPeople(keyword, limit);
     }
     const response = {

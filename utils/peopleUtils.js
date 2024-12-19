@@ -1,4 +1,4 @@
-const { people, products } = require("../data");
+const { people } = require("../data");
 
 const getPeople = () => {
     const peopleNoId = people.map((person) => {
