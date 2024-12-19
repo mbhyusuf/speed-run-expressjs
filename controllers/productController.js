@@ -1,4 +1,5 @@
 const { products } = require("../data");
+const Product = require("../models/productModel.js");
 const {
     getAllProduct,
     getProductById,
@@ -61,7 +62,7 @@ const searchProductController = (req, res) => {
     };
     return res.status(200).json(response);
 };
-const postProductController = (req, res) => {
+const postProductController = async (req, res) => {
     const { name, image, price, desc } = req.body;
     if (!name) {
         return res.status(400).json({ msg: "please provide name value" });
@@ -76,10 +77,12 @@ const postProductController = (req, res) => {
         return res.status(400).json({ msg: "please provide desc value" });
     }
 
-    const newProducts = postProduct(name, image, price, desc);
+    const product = await Product.create(req.body);
+
     const response = {
         success: true,
-        data: newProducts,
+        message: "Successfully created the product",
+        data: product,
     };
     return res.status(201).json(response);
 };
